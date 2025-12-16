@@ -17,6 +17,8 @@ const frontendUrls = process.env.FRONTEND_URLS
       "https://p2p-file-delta.vercel.app"
     ];
 
+console.log('Allowed frontend origins:', frontendUrls);
+
 const io = new Server(httpServer, {
   cors: {
     origin: frontendUrls,
