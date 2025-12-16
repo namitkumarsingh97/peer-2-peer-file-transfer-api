@@ -8,9 +8,18 @@ dotenv.config();
 
 const app = express();
 const httpServer = createServer(app);
+
+// Support multiple frontend URLs (local and production)
+const frontendUrls = process.env.FRONTEND_URLS 
+  ? process.env.FRONTEND_URLS.split(',').map(url => url.trim())
+  : [
+      process.env.FRONTEND_URL || "http://localhost:5173",
+      "https://p2p-file-delta.vercel.app"
+    ];
+
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: frontendUrls,
     methods: ["GET", "POST"],
     credentials: true
   }
